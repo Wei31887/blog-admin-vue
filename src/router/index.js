@@ -1,25 +1,75 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import { createRouter, createWebHistory } from 'vue-router'
+import { getToken } from '@/utils/token'
+import Home from '@/views/home/HomeView.vue'
+// import Test from '@/views/TestView'
 
 const routes = [
   {
-    path: '/',
-    name: 'home',
-    component: HomeView
+    path: '/admin/home',
+    name: 'Home',
+    component: Home,
+    children: [
+      {
+        // Welcome 將渲染至 home 中 </router-view>
+        path: 'welcome',
+        name: 'Welcome',
+        component: () => import('@/views/WelcomeView.vue'),
+      },
+      {
+        path: 'changePassword',
+        name: 'ChangePassword',
+        component: () => import('@/views/system/ChangePassword')
+      },
+      {
+        path: 'myInfo',
+        name: 'MyInfo',
+        component: () => import('@/views/about/MyInfoView')
+      },
+      {
+        path: 'blogList',
+        name: 'BlogList',
+        component: () => import('@/views/blog/BlogListView')
+      },
+      {
+        path: 'addBlog',
+        name: 'AddBlog',
+        component: () => import('@/views/blog/AddBlogView')
+      },
+      {
+        path: 'blogType',
+        name: 'BlogType',
+        component: () => import('@/views/blog/BlogTypeView')
+      }
+    ],
   },
   {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
+    path: '/login',
+    name: 'Login',
+    component: () => import('@/views/login/LoginView.vue')
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    redirect: '/login'
   }
 ]
 
 const router = createRouter({
-  history: createWebHashHistory(),
+  history: createWebHistory(),
   routes
 })
+
+router.beforeEach( (to, from, next) => {
+  const token = getToken();
+  if(token){
+    if(to.name == "Login") {
+      next({name: "Welcome"})
+    }
+  } else {
+    if(to.name != "Login") {
+      next({name: "Login"});
+    }
+  }
+  next();
+});
 
 export default router

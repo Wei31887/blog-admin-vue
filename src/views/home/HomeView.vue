@@ -72,22 +72,14 @@ export default {
             asideRatio.value = 6
           }
         }
-        // const getBlogger = () => {
-        //     findBlogger().then( res => {
-        //         if (res.data.code == 0) {
-        //             console.log("find blogger")
-
-        //         }
-        //     })
-        // }
         onMounted(() => {
-            // let navHeight = document.documentElement.clientHeight
-            // let nav = document.getElementsByClassName('el-aside')
-            // for (let item of nav) {
-            //     item.style.minHeight = (navHeight) + 'px';
-            // }
-            // document.getElementById('main-content').style.maxHeight = (navHeight) + 'px';
-        })
+            let navHeight = document.documentElement.clientHeight
+            let nav = document.getElementsByClassName('el-aside')
+            for (let item of nav) {
+                item.style.minHeight = (navHeight) + 'px';
+            }
+            document.getElementById('main-content').style.minHeight = (navHeight) + 'px';
+          })
         return {
           asideRatio,
           changeRatio
@@ -96,22 +88,24 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 .el-row.header{
   display: flex;
   justify-content: center;
+  padding-bottom: 10px;
 }
 
 .el-card{
-  margin-bottom: 1.2%;
+  padding: 1.2%;
 }       
 
 .el-aside {
   color: var(--el-text-color-primary);
+  padding-bottom: 1.2%;
 }
 
 .el-row.footer{
-  padding: 20px;
+  padding: 30px;
 }
 
 </style>

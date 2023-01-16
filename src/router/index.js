@@ -31,7 +31,7 @@ const routes = [
         component: () => import('@/views/blog/BlogListView')
       },
       {
-        path: 'addBlog',
+        path: 'addBlog/:id?',
         name: 'AddBlog',
         component: () => import('@/views/blog/AddBlogView')
       },
@@ -39,6 +39,11 @@ const routes = [
         path: 'blogType',
         name: 'BlogType',
         component: () => import('@/views/blog/BlogTypeView')
+      },
+      {
+        path: 'commentList',
+        name: 'Comment',
+        component: () => import('@/views/comment/CommentView')
       }
     ],
   },

@@ -1,24 +1,32 @@
 <template>
     <div class="header">
         <h2>
-            Blog List
+            Comment List
         </h2> 
     </div>
-        <el-button type="primary" size="small" @click="handleAdd()">Write a blog</el-button>
         <el-table :data="tableData" style="width: 100%">
           <el-table-column fixed prop="id" label="ID" width="70" />
-          <el-table-column prop="title" label="Title" width="150" />
-          <el-table-column prop="type_name" label="Tag" width="180" />
-          <el-table-column prop="add_time" label="Create time" width="180" />
-          <el-table-column prop="update_time" label="Update time" width="180" />
+          <el-table-column prop="ip" label="IP" width="120" />
+          <el-table-column prop="blog_id" label="Blog ID" width="80" />
+          <el-table-column prop="blog_title" label="Blog Title" width="120" />
+          <el-table-column prop="content" label="Content" width="180" />
+          <el-table-column prop="status" label="Status" width="80" />
+          <el-table-column prop="add_time" label="Add time" width="180" />
           <el-table-column fixed="right" label="Operations" width="150">
             <template #default="scope">
                 <el-button link type="danger" 
                 @click="handleDelete(scope.$index, scope.row)">Delete
                 </el-button>
-                <el-button link type="primary" 
-                @click="handleEdit(scope.$index, scope.row)">Edit
-                </el-button>
+                <div class="function">
+                    <el-button link type="info"  
+                    @click="handleBlock(scope.$index, scope.row)"
+                    v-if="scope.row.status==0">
+                    Block</el-button>
+                    <el-button link type="info"  
+                    @click="handleBlock(scope.$index, scope.row)"
+                    v-else>
+                    Unblock</el-button>
+                </div>
             </template>
           </el-table-column>
         </el-table>
@@ -36,14 +44,15 @@
 
 <script>
 import { ref, computed, reactive, toRefs, onMounted } from 'vue'
-import { blogDelete, blogList } from '@/api/blog'
+import { commentList, commentDelete, CommentStatus } from '@/api/comment'
 import { ElNotification, ElMessageBox } from 'element-plus'
-import { useRouter } from 'vue-router'
+// import { useRouter } from 'vue-router'
 
 export default {
-    name: 'BlogListView',
+    name: 'CommentListView',
     setup() {
-        const router = useRouter()
+        // const router = useRouter()
+        const func = ref()
         const total = ref(50)
         const state = reactive({
             pageSize: 10,
@@ -56,7 +65,7 @@ export default {
         })
 
         const loading = () => {
-            blogList({
+            commentList({
                 page: state.currentPage,
                 size: state.pageSize
             }).then( res => {
@@ -75,20 +84,45 @@ export default {
             })
         }
 
-        const handleAdd = () => {
-            router.push({name: 'AddBlog'})
+        const handleBlock = (index, row) => {
+            let update = {
+                id: row.id,
+                status: 0
+            }
+            if (row.status == 0) {
+                update.status = 1
+            } else {
+                update.status = 0
+            }
+
+            CommentStatus(update).then( res => {
+                if (res.data.code === 0) {
+                    let msg = update.status == 1 ? 'Block successfully!' : 'Unblock successfully!'
+                    ElNotification({
+                        title: 'Success',
+                        type: 'success',
+                        message: msg
+                    })
+                    row.status = update.status
+                    // router.go()
+                    return
+                } else {
+                    ElNotification({
+                        title: 'Error',
+                        type: 'error',
+                        message: res.data.msg
+                    })
+                }
+            })
         }
 
-        const handleEdit = (index, row) => {
-            router.push({name: 'AddBlog', params: {id: row.id}})
-        }
         const handleDelete = (index, row) => {
             ElMessageBox.confirm('Are you sure to delete it?', 'Warning', {
                 confirmButtonText: 'Yes',
                 cancelButtonText: 'No',
                 type: 'warning'
             }).then(() => {
-                blogDelete({
+                commentDelete({
                     id: row.id
                 }).then( res => {
                     if (res.data.code === 0) {
@@ -115,19 +149,19 @@ export default {
             state.currentPage = newPage
             loading()
         }
+
         // mounted
         onMounted(() => {
             loading()
         })
 
         return {
+            func,
             currentTotal,
             ...toRefs(state),
-            handleAdd,
             handleDelete,
-            handleEdit,
+            handleBlock,
             handleCurrentChange,
-
         }
     }
 }

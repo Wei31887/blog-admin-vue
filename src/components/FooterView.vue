@@ -1,25 +1,27 @@
 <template>
-    <!-- <el-card width="100%"> -->
-        <div>
-            <p>copyright {{ time }}WeiTim</p>
+        <div class="footer">
+            <p>Copyright © {{year}} by WeiTim. All rights reserved</p>
         </div>
-        <el-steps :active="0" align-center>
-            <el-step />
-            <el-step />
-            <el-step />
-        </el-steps>
-    <!-- </el-card> -->
 </template>
 
 <script>
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 
 export default {
     setup() {
-        const time = ref()
+        const year = ref()
+        onMounted(() => {
+            year.value = new Date().getFullYear()
+        })
         return {
-            time
+            year
         }
     }
 }
 </script>
+
+<style>
+.div.footer {
+    padding: 50px;
+}
+</style>

@@ -4,34 +4,34 @@
             Blog List
         </h2> 
     </div>
-        <el-button type="primary" size="small" @click="handleAdd()">Write a blog</el-button>
-        <el-table :data="tableData" style="width: 100%">
-          <el-table-column fixed prop="id" label="ID" width="70" />
-          <el-table-column prop="title" label="Title" width="150" />
-          <el-table-column prop="type_name" label="Tag" width="180" />
-          <el-table-column prop="add_time" label="Create time" width="180" />
-          <el-table-column prop="update_time" label="Update time" width="180" />
-          <el-table-column fixed="right" label="Operations" width="150">
-            <template #default="scope">
-                <el-button link type="danger" 
-                @click="handleDelete(scope.$index, scope.row)">Delete
-                </el-button>
-                <el-button link type="primary" 
-                @click="handleEdit(scope.$index, scope.row)">Edit
-                </el-button>
-            </template>
-          </el-table-column>
-        </el-table>
-        <div class="pagination">
-                <el-pagination
-                    v-model:current-page="currentPage"
-                    v-model:page-size="pageSize"
-                    background
-                    layout="prev, pager, next, jumper"
-                    :total="currentTotal"
-                    @current-change="handleCurrentChange"
-                    />
-        </div>
+    <el-button type="primary" size="small" @click="handleAdd()">Write a blog</el-button>
+    <el-table :data="tableData" style="width: 100%">
+        <el-table-column fixed prop="id" label="ID" width="70" />
+        <el-table-column prop="title" label="Title" width="150" />
+        <el-table-column prop="type_name" label="Tag" width="180" />
+        <el-table-column prop="add_time" label="Create time" width="180" />
+        <el-table-column prop="update_time" label="Update time" width="180" />
+        <el-table-column fixed="right" label="Operations" width="150">
+        <template #default="scope">
+            <el-button link type="danger" 
+            @click="handleDelete(scope.$index, scope.row)">Delete
+            </el-button>
+            <el-button link type="primary" 
+            @click="handleEdit(scope.$index, scope.row)">Edit
+            </el-button>
+        </template>
+        </el-table-column>
+    </el-table>
+    <div class="pagination">
+        <el-pagination
+            v-model:current-page="currentPage"
+            v-model:page-size="pageSize"
+            background
+            layout="prev, pager, next, jumper"
+            :total="currentTotal"
+            @current-change="handleCurrentChange"
+            />
+    </div>
   </template>
 
 <script>
@@ -51,7 +51,7 @@ export default {
             tableData: [],
         })
 
-        const currentTotal = computed(()=>{
+        const currentTotal = computed(() => {
             return total.value
         })
 

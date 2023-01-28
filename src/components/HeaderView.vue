@@ -1,5 +1,4 @@
 <template>
-  <el-card style="text-align: right; font-size: 16px" class="header">
     <div class="toolbar">
       <div class="logo">
         <router-link to="/" style="text-decoration: none;">
@@ -22,7 +21,6 @@
         </el-dropdown>
       </div>
       </div>
-    </el-card>
 </template>
 
 <script>

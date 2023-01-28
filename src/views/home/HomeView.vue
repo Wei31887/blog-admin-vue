@@ -1,49 +1,34 @@
 <template>
-    <div class="container">
-      <!-- header part -->
-        <el-row class="header">
-          <el-col :span="23">
-                <header-view>Header</header-view>
-          </el-col>
-        </el-row>
-        
-        <!-- main content -->
-        <el-row class="main" justify="center" :gutter="12">
-          <el-col class="main-aside" :span="asideRatio">
-            <el-aside width="auto">
-                <menu-nav @statusChange="changeRatio">Aside</menu-nav>
-            </el-aside>
-          </el-col>
-
-          <el-col class="main" :span="23-asideRatio">
-            <el-row>
-              <el-col :span="24">
-                  <el-card id="main-content" >
-                    <!-- <template #header>
-                      <div class="content-title">
-                        <span>{{ title }}</span>
-                      </div>
-                    </template> -->
-                    <router-view></router-view>
-                  </el-card>
-              </el-col>
-            </el-row>
-            
-            
-            
-          </el-col>
-        </el-row>
-        <!-- footer -->
-        <el-row class="footer">
-          <el-col :span="24">
-              <footer-view></footer-view>
-          </el-col>
-        </el-row>
-        <template>
-          Scroll down to see the bottom-right button.
-          <el-backtop :right="100" :bottom="100" />
-        </template>
-    </div>
+  <div class="container">
+    <el-row>
+      <el-col class="main-aside" :span="asideRatio">
+        <!-- aside -->
+        <aside class="aside">
+          <menu-nav @statusChange="changeRatio"></menu-nav>
+        </aside>
+      </el-col>
+      <el-col :span="23-asideRatio"> 
+        <div class="system-main-container">
+          <!-- header -->
+          <header class="header">
+            <header-view>Header</header-view>
+          </header>
+          <main class="main-container">
+            <!-- content -->
+            <el-scrollbar height="300px">
+              <div class="content">
+                <router-view></router-view>
+              </div>
+            </el-scrollbar>
+          </main>
+        </div>
+      </el-col>
+    </el-row>
+    <!-- footer -->
+    <footer class="footer">
+      <footer-view></footer-view>
+    </footer>
+  </div>
 </template>
   
 <script>
@@ -52,7 +37,6 @@ import FooterView from '@/components/FooterView'
 import HeaderView from '@/components/HeaderView'
 import { onMounted, ref } from 'vue'
 import { title } from 'process'
-// import { findBlogger } from '@/api/blogger';
 
 export default {
     name: "HomeView",
@@ -73,12 +57,12 @@ export default {
           }
         }
         onMounted(() => {
-            let navHeight = document.documentElement.clientHeight
-            let nav = document.getElementsByClassName('el-aside')
-            for (let item of nav) {
-                item.style.minHeight = (navHeight) + 'px';
-            }
-            document.getElementById('main-content').style.minHeight = (navHeight) + 'px';
+            // let navHeight = document.documentElement.clientHeight
+            // let nav = document.getElementsByClassName('el-aside')
+            // for (let item of nav) {
+            //     item.style.minHeight = (navHeight) + 'px';
+            // }
+            // document.getElementById('main-content').style.minHeight = (navHeight) + 'px';
           })
         return {
           asideRatio,
@@ -89,23 +73,47 @@ export default {
 </script>
 
 <style>
-.el-row.header{
+div.container {
+  position: relative;
+}
+
+aside.aside {
+  position: sticky;
+  right: 0;
+  top: 0;
+  height: 100vh;
+}
+
+div.system-main-container {
   display: flex;
-  justify-content: center;
-  padding-bottom: 10px;
+  position: relative;
+  flex-direction: column;
+  height: 100vh;
+  width: 100%;
 }
 
-.el-card{
-  padding: 1.2%;
-}       
-
-.el-aside {
-  color: var(--el-text-color-primary);
-  padding-bottom: 1.2%;
+main.main-container {
+  z-index: 1;
+  margin: 0.7rem;
+  padding: 0.5rem;
+  background-color:  var(--div-color);
+  box-shadow: 0 1px 1px 0 rgba(150, 150, 150, 0.2), 0 3px 3px 0 rgba(150, 150, 150, 0.1);
+  border-radius: 6px;
+  height: 80%;
 }
 
-.el-row.footer{
-  padding: 30px;
+header.header{
+  z-index: 4;
+  min-width: 100%;
+  top: 0px;
+  /* min-height: 20%; */
+}
+
+footer.footer {
+  z-index: 3;
+  position: relative;
+  bottom: 0px;
+  width: 100%;
 }
 
 </style>

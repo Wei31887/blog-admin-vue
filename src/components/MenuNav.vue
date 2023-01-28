@@ -1,14 +1,12 @@
 <template>
-  <el-card :body-style="{ padding: '0px' }">
-    <template #header>
-      <div class="NavHeader">
-        <el-button link v-model="isCollapse" @click="handleExpand">
-          <el-icon size="large" >
-              <component :is="statusIcon"></component>
-          </el-icon>
-        </el-button>
-      </div>
-    </template>
+  <div class="aside-view">
+    <div class="NavHeader">
+      <el-button link v-model="isCollapse" @click="handleExpand">
+        <el-icon size="large" >
+            <component :is="statusIcon"></component>
+        </el-icon>
+      </el-button>
+    </div>
     <div class="NavMain">
       <el-scrollbar height="400px">
           <el-menu 
@@ -26,7 +24,7 @@
           </el-menu>
       </el-scrollbar>
     </div>
-  </el-card>
+  </div>
 </template>
 
 <script>

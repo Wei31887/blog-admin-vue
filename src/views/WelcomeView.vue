@@ -1,9 +1,7 @@
 <template>
-    <el-row>
-        <div class="welcome">
-            <h1>Welcome to the blog management system</h1>
-        </div>
-    </el-row>   
+    <div class="welcome">
+        <h1>Welcome to the blog management system</h1>
+    </div>
 </template>
 
 <script>
@@ -12,3 +10,11 @@ export default {
     setup() {}
 }
 </script>
+
+<style>
+div.welcome {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+</style>

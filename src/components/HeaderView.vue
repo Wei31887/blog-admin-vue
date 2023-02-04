@@ -1,5 +1,5 @@
 <template>
-    <div class="toolbar">
+    <div class="header-view">
       <div class="logo">
         <router-link to="/" style="text-decoration: none;">
           <h3>Blog Admin</h3>  
@@ -75,7 +75,7 @@ export default {
 </script>
 
 <style scoped>
-div.toolbar {
+div.header-view {
   display: flex;
   align-items: center;
   justify-content: space-between;

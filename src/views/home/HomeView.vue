@@ -1,13 +1,13 @@
 <template>
   <div class="container">
     <el-row>
+      <!-- aside -->
       <el-col class="main-aside" :span="asideRatio">
-        <!-- aside -->
         <aside class="aside">
           <menu-nav @statusChange="changeRatio"></menu-nav>
         </aside>
       </el-col>
-      <el-col :span="23-asideRatio"> 
+      <el-col :span="24-asideRatio"> 
         <div class="system-main-container">
           <!-- header -->
           <header class="header">
@@ -15,25 +15,25 @@
           </header>
           <main class="main-container">
             <!-- content -->
-            <el-scrollbar height="300px">
+            <!-- <el-scrollbar height="300px"> -->
               <div class="content">
                 <router-view></router-view>
               </div>
-            </el-scrollbar>
+            <!-- </el-scrollbar> -->
           </main>
         </div>
       </el-col>
+      <!-- footer
+      <footer class="footer">
+        <footer-view></footer-view>
+      </footer> -->
     </el-row>
-    <!-- footer -->
-    <footer class="footer">
-      <footer-view></footer-view>
-    </footer>
   </div>
 </template>
   
 <script>
 import MenuNav from '@/components/MenuNav'
-import FooterView from '@/components/FooterView'
+// import FooterView from '@/components/FooterView'
 import HeaderView from '@/components/HeaderView'
 import { onMounted, ref } from 'vue'
 import { title } from 'process'
@@ -44,7 +44,7 @@ export default {
     components: {
         MenuNav,
         HeaderView,
-        FooterView
+        // FooterView
     },
     setup() {
         const asideRatio = ref(6)
@@ -75,13 +75,15 @@ export default {
 <style>
 div.container {
   position: relative;
+  min-height: 100vh;
+  height: 100%;
 }
 
 aside.aside {
   position: sticky;
   right: 0;
   top: 0;
-  height: 100vh;
+  /* height: 100vh; */
 }
 
 div.system-main-container {
@@ -89,25 +91,36 @@ div.system-main-container {
   position: relative;
   flex-direction: column;
   height: 100vh;
-  width: 100%;
-}
-
-main.main-container {
-  z-index: 1;
-  margin: 0.7rem;
-  padding: 0.5rem;
-  background-color:  var(--div-color);
-  box-shadow: 0 1px 1px 0 rgba(150, 150, 150, 0.2), 0 3px 3px 0 rgba(150, 150, 150, 0.1);
-  border-radius: 6px;
-  height: 80%;
 }
 
 header.header{
   z-index: 4;
-  min-width: 100%;
   top: 0px;
-  /* min-height: 20%; */
+  margin: 1rem 1rem 0rem 0;
+  background-color:  var(--header-color);
+  border-radius: 6px;
 }
+
+main.main-container {
+  z-index: 10;
+  padding: 0.5rem;
+  height: 85%;
+  overflow: scroll;
+  margin: 1rem 1rem 1rem 0;
+  background-color:  var(--div-color);
+  border-radius: 6px;
+  height: 100%;
+}
+
+div.content {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  /* height: 100%; */
+}
+
 
 footer.footer {
   z-index: 3;

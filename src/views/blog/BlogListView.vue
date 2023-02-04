@@ -4,24 +4,26 @@
             Blog List
         </h2> 
     </div>
-    <el-button type="primary" size="small" @click="handleAdd()">Write a blog</el-button>
-    <el-table :data="tableData" style="width: 100%">
-        <el-table-column fixed prop="id" label="ID" width="70" />
-        <el-table-column prop="title" label="Title" width="150" />
-        <el-table-column prop="type_name" label="Tag" width="180" />
-        <el-table-column prop="add_time" label="Create time" width="180" />
-        <el-table-column prop="update_time" label="Update time" width="180" />
-        <el-table-column fixed="right" label="Operations" width="150">
-        <template #default="scope">
-            <el-button link type="danger" 
-            @click="handleDelete(scope.$index, scope.row)">Delete
-            </el-button>
-            <el-button link type="primary" 
-            @click="handleEdit(scope.$index, scope.row)">Edit
-            </el-button>
-        </template>
-        </el-table-column>
-    </el-table>
+    <div class="blog-list-container">
+        <el-button class="blog-button" type="primary" size="large" @click="handleAdd()">Write a blog</el-button>
+        <el-table :data="tableData" style="width: 100%">
+            <el-table-column fixed prop="id" label="ID" width="70" />
+            <el-table-column prop="title" label="Title" width="150" />
+            <el-table-column prop="type_name" label="Tag" width="180" />
+            <el-table-column prop="add_time" label="Create time" width="180" />
+            <el-table-column prop="update_time" label="Update time" width="180" />
+            <el-table-column fixed="right" label="Operations" width="150">
+            <template #default="scope">
+                <el-button link type="danger" 
+                @click="handleDelete(scope.$index, scope.row)">Delete
+                </el-button>
+                <el-button link type="primary" 
+                @click="handleEdit(scope.$index, scope.row)">Edit
+                </el-button>
+            </template>
+            </el-table-column>
+        </el-table>
+    </div>
     <div class="pagination">
         <el-pagination
             v-model:current-page="currentPage"
@@ -46,7 +48,7 @@ export default {
         const router = useRouter()
         const total = ref(50)
         const state = reactive({
-            pageSize: 10,
+            pageSize: 8,
             currentPage: 1,
             tableData: [],
         })
@@ -134,14 +136,27 @@ export default {
 
 </script>
 
-<style scoped>
+<style>
+
+div.blog-list-container {
+    display: flex;
+    flex-direction: column;
+
+}
+
 div.pagination {
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 20px;
+    position: relative;
+    bottom: 0;
 }
   .el-table td, .el-table th{
     text-align: center!important;
   }
+
+.blog-button {
+    margin: 1rem 0 1rem 0;
+}
 </style>

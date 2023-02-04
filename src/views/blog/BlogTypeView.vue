@@ -1,38 +1,38 @@
 <template>
-    <div class="header">
-        <h2>
-            Blog Type
-        </h2> 
-    </div>
-    <div class="button">
-        <el-button type="primary" size="small" @click="handleAdd()">Write a blog</el-button>
-    </div>
-    <div class="container">
-        <el-table :data="tableData" style="width: 100%">
-          <el-table-column fixed prop="id" label="ID" width="100" />
-          <el-table-column prop="name" label="Title" width="120" />
-          <el-table-column prop="sort" label="Level" width="120" />
-          <el-table-column fixed="right" label="Operations" width="150">
-            <template #default="scope">
-                <el-button link type="danger" 
-                @click="handleDelete(scope.$index, scope.row)">Delete
-                </el-button>
-                <el-button link type="primary" 
-                @click="handleEdit(scope.$index, scope.row)">Edit
-                </el-button>
-            </template>
-          </el-table-column>
-        </el-table>
-        <div class="pagination">
-                <el-pagination
-                    v-model:current-page="currentPage"
-                    v-model:page-size="pageSize"
-                    background
-                    layout="prev, pager, next, jumper"
-                    :total="currentTotal"
-                    @current-change="handleCurrentChange"
-                    />
+    <div class="blog-type-view">
+        <div class="header">
+            <h2>
+                Blog Type
+            </h2> 
         </div>
+        <div class="blog-list-container">
+                <el-button class="blog-button" type="primary" size="large" @click="handleAdd()">Write a blog</el-button>
+                <el-table :data="tableData" style="width: 100%">
+                  <el-table-column fixed prop="id" label="ID" width="100" />
+                  <el-table-column prop="name" label="Title" width="300" />
+                  <el-table-column prop="sort" label="Level" width="150" />
+                  <el-table-column fixed="right" label="Operations" width="300">
+                    <template #default="scope">
+                        <el-button link type="danger" 
+                        @click="handleDelete(scope.$index, scope.row)">Delete
+                        </el-button>
+                        <el-button link type="primary" 
+                        @click="handleEdit(scope.$index, scope.row)">Edit
+                        </el-button>
+                    </template>
+                  </el-table-column>
+                </el-table>
+            </div>
+            <div class="pagination">
+                    <el-pagination
+                        v-model:current-page="currentPage"
+                        v-model:page-size="pageSize"
+                        background
+                        layout="prev, pager, next, jumper"
+                        :total="currentTotal"
+                        @current-change="handleCurrentChange"
+                        />
+            </div>
     </div>
   </template>
 
@@ -137,26 +137,29 @@ export default {
 </script>
 
 <style scoped>
-div.header{
+
+div.blog-type-view {
+    width: 100%;
+}
+div.blog-list-container {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
+
 }
-div,button {
-    display: flex;
-    justify-content: start;
-}
-div.container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
+
 div.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     padding: 20px;
+    position: relative;
+    bottom: 0;
 }
   .el-table td, .el-table th{
     text-align: center!important;
   }
+
+.blog-button {
+    margin: 1rem 0 1rem 0;
+}
 </style>

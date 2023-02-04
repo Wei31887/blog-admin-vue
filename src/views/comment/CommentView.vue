@@ -4,6 +4,16 @@
             Comment List
         </h2> 
     </div>
+        <div class="pagination">
+                <el-pagination
+                    v-model:current-page="currentPage"
+                    v-model:page-size="pageSize"
+                    background
+                    layout="prev, pager, next, jumper"
+                    :total="currentTotal"
+                    @current-change="handleCurrentChange"
+                    />
+        </div>
         <el-table :data="tableData" style="width: 100%">
           <el-table-column fixed prop="id" label="ID" width="70" />
           <el-table-column prop="ip" label="IP" width="120" />
@@ -30,16 +40,7 @@
             </template>
           </el-table-column>
         </el-table>
-        <div class="pagination">
-                <el-pagination
-                    v-model:current-page="currentPage"
-                    v-model:page-size="pageSize"
-                    background
-                    layout="prev, pager, next, jumper"
-                    :total="currentTotal"
-                    @current-change="handleCurrentChange"
-                    />
-        </div>
+        
   </template>
 
 <script>

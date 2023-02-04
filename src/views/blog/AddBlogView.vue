@@ -1,49 +1,60 @@
 <template>
-    <div class="addBlog">
-        <el-form
-        ref="addBlogRef"
-        :model="BlogForm"
-        :rules="rules">
-            <el-form-item prop="title" label="Article title">
-                <el-input type="text" v-model="BlogForm.title"/>
-            </el-form-item>
-            <el-form-item prop="typeId" label="Classification">
-                <el-select
-                v-model="BlogForm.typeId"
-                clearable
-                placeholder="Select"
-                style="width: 240px"
-                >
-                <el-option
-                    v-for="item in classList"
-                    :key="item.id.toString()"
-                    :label="item.name"
-                    :value="item.id"
-                />
-                </el-select>
-            </el-form-item>
-            <el-form-item prop="content" label="Content">
-                <el-input
-                    v-model="BlogForm.content"
-                    :autosize="{ minRows: 4, maxRows: 4 }"
-                    type="textarea"
-                    placeholder="Please input"
-                />
-            </el-form-item>
-            <el-form-item label="Operation">
-                <el-button type="primary" @click="submit">{{ func }}</el-button>
-                <el-button type="default" @click="goBack">Go back</el-button>
-            </el-form-item>
-        </el-form>
+    <div class="header">
+        <h2>
+            Add Blog
+        </h2> 
+    </div>
+    <div class="add-blog-view">
+        <div class="add-blog-form">
+            <el-form
+            ref="addBlogRef"
+            :model="BlogForm"
+            :rules="rules">
+                <el-form-item prop="title" label="Article title">
+                    <el-input type="text" v-model="BlogForm.title"/>
+                </el-form-item>
+                <el-form-item prop="typeId" label="Classification">
+                    <el-select
+                    v-model="BlogForm.typeId"
+                    clearable
+                    placeholder="Select"
+                    style="width: 240px"
+                    >
+                    <el-option
+                        v-for="item in classList"
+                        :key="item.id.toString()"
+                        :label="item.name"
+                        :value="item.id"
+                    />
+                    </el-select>
+                </el-form-item>
+                <el-form-item prop="content" label="Content">
+                    <el-input
+                        v-model="BlogForm.content"
+                        :autosize="{ minRows: 4, maxRows: 4 }"
+                        type="textarea"
+                        placeholder="Please input"
+                    />
+                </el-form-item>
+                <el-form-item label="Operation">
+                    <el-button type="primary" @click="submit">{{ func }}</el-button>
+                    <el-button type="default" @click="goBack">Go back</el-button>
+                </el-form-item>
+            </el-form>
+        </div>
+        <div class="display-blog" v-html="markHTML">
+            
+        </div>
     </div>
 </template>
 
 <script>
-import { ref, reactive, toRefs, onMounted } from 'vue';
+import { ref, reactive, toRefs, onMounted, computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { ElNotification } from 'element-plus'
 import { saveBlog, blogOne } from '@/api/blog';
 import { typeAll } from '@/api/blogType'
+import { marked } from 'marked'
 
 export default {
     name: 'AddBlogView',
@@ -73,6 +84,10 @@ export default {
                 id: 0
             },
             classList: [], 
+        })
+
+        const markHTML = computed(() => {
+            return marked(state.BlogForm.content)
         })
 
         const loadBlogType = () => {
@@ -156,8 +171,39 @@ export default {
             func,
             ...toRefs(state),
             submit,
-            goBack
+            goBack,
+            markHTML
         }
     }
 }
 </script>
+
+<style>
+div.add-blog-view {
+    /* height: 100%; */
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+
+}
+div.add-blog-form {
+    width: 50%;
+}
+div.display-blog {
+    margin: 0 1rem 0 1rem;
+    background-color: white;
+    border-radius: 6px;
+    /* border: 1px solid var(--border-color); */
+    overflow: scroll;
+    width: 50%;
+    display: flex;
+    padding: 1rem;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+
+    /* text-align: center; */
+    max-height: 50%;
+    overflow: scroll;
+}
+</style>

@@ -1,5 +1,8 @@
 <template>
-    <div class="container">
+    <div class="info-view">
+        <div class="header">
+            <h2>Introduction</h2>
+        </div>
         <el-form
         :model="myInfo"
         ref="myInfoRef"
@@ -161,5 +164,9 @@ export default {
   width: 178px;
   height: 178px;
   text-align: center;
+}
+
+div.info-view {
+    width: 100%;
 }
 </style>

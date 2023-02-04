@@ -1,28 +1,26 @@
 <template>
   <div class="aside-view">
-    <div class="NavHeader">
-      <el-button link v-model="isCollapse" @click="handleExpand">
+    <div class="nav-header" @click="handleExpand">
+      <el-button class="collapse-button" link v-model="isCollapse" >
         <el-icon size="large" >
             <component :is="statusIcon"></component>
         </el-icon>
       </el-button>
     </div>
-    <div class="NavMain">
-      <el-scrollbar height="400px">
-          <el-menu 
-            :default-active="route.path"
-            :collapse="isCollapse"
-            :router="true"
-            :collapse-transition="false"
-            >
-            <menu-item v-for="(item, index) in menus" 
-              :item="item" 
-              :navIndex="String(index)" 
-              :key="item.id"
-            >
-            </menu-item>
-          </el-menu>
-      </el-scrollbar>
+    <div class="nav-main">
+        <el-menu 
+          :default-active="route.path"
+          :collapse="isCollapse"
+          :router="true"
+          :collapse-transition="false"
+          >
+          <menu-item v-for="(item, index) in menus" 
+            :item="item" 
+            :navIndex="String(index)" 
+            :key="item.id"
+          >
+          </menu-item>
+        </el-menu>
     </div>
   </div>
 </template>
@@ -134,21 +132,53 @@ export default {
 </script>
 
 <style>
+
+div.aside-view {
+  padding-top: 1rem;
+  height: 100%;
+}
+
 .el-menu {
   border-right: 0 !important;
 }
+.el-menu-item {
+  border-radius: 10px;
+}
+.el-sub-menu__title {
+  border-radius: 10px;
+}
 
-div.NavHeader {
+div.nav-header {
+  padding: 1rem;
   display: flex;
   justify-content: center;
   align-items: center;
+  margin: 0.5rem 2rem 0.5rem 2rem;
+  background-color: rgba(227, 238, 217, 0.5);
+  border-radius: 6px;
+  
 }
 
-div.NavMain {
+div.nav-header:hover {
+  cursor: pointer;
+}
+
+div.nav-main {
+  padding-top: 1rem;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: flex-start;
   align-items: center;
+  height: 100%;
 }
 
+.el-menu-item {
+  font-size: medium !important;
+  /* font-weight: bold; */
+}
+.el-sub-menu__title{
+  font-size: medium !important;
+  /* font-weight: bold; */
+}
 
 </style>

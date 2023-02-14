@@ -1,6 +1,6 @@
 # blog-admin-vue
 使用Gin + Vue3 + Element Plus 的前後端分離部落格 Blog 專案。
-前端採用 Vue3 + Element Plus框架架設簡約風格部落格架構，支援Markdwon語法展示部落格文章內容，實現文章分類、文章標籤tags、文章目錄等功能。
+Admin後台前端採用 Vue3 + Element Plus框架架設，集中管理部落格文章內容，文章分類、文章標籤tags、留言內容管理等功能。
 
 - 目標：個人網站blog製作
 - 功能：後台admin管理員功能

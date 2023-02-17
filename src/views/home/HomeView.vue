@@ -33,9 +33,8 @@
   
 <script>
 import MenuNav from '@/components/MenuNav'
-// import FooterView from '@/components/FooterView'
 import HeaderView from '@/components/HeaderView'
-import { onMounted, ref } from 'vue'
+import { ref } from 'vue'
 import { title } from 'process'
 
 export default {
@@ -56,14 +55,6 @@ export default {
             asideRatio.value = 6
           }
         }
-        onMounted(() => {
-            // let navHeight = document.documentElement.clientHeight
-            // let nav = document.getElementsByClassName('el-aside')
-            // for (let item of nav) {
-            //     item.style.minHeight = (navHeight) + 'px';
-            // }
-            // document.getElementById('main-content').style.minHeight = (navHeight) + 'px';
-          })
         return {
           asideRatio,
           changeRatio

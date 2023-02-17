@@ -41,9 +41,7 @@ export default {
 
         const loading = () => {
           findBlogger().then(res => {
-            if (res.data.code === 0) {
-              blogger.value = res.data.data.nickname 
-            }
+            blogger.value = res.data.data.nickname 
           })
         }
         // mounted
@@ -59,10 +57,10 @@ export default {
                 type: 'warning'
             }).then(() => {
                 logout().then( res => {
-                    if (res.data.code == 0) {
-                        removeToken()
-                        router.push({name: 'Login'})
-                    }
+                  if (res.status == 200) {
+                    removeToken()
+                    router.push({name: 'Login'})
+                  }
                 })
             }).catch(() => { })
         }

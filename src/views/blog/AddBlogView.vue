@@ -13,9 +13,9 @@
                 <el-form-item prop="title" label="Article title">
                     <el-input type="text" v-model="BlogForm.title"/>
                 </el-form-item>
-                <el-form-item prop="typeId" label="Classification">
+                <el-form-item prop="type_id" label="Classification">
                     <el-select
-                    v-model="BlogForm.typeId"
+                    v-model="BlogForm.type_id"
                     clearable
                     placeholder="Select"
                     style="width: 240px"
@@ -67,7 +67,7 @@ export default {
             title: [ 
                 {required: true, message: 'Can\'t be empty', trigger: 'blur'} 
             ],
-            typeId: [ 
+            type_id: [ 
                 {required: true, message: 'Can\'t be empty', trigger: 'blur'} 
             ],
             content: [ 
@@ -77,8 +77,7 @@ export default {
         const state = reactive({
             BlogForm: {
                 title: 'Let\'s write a blog!',
-                typeId: '',
-                addTime: '',
+                type_id: '',
                 content: '',
                 summary: '',
                 id: 0
@@ -92,7 +91,7 @@ export default {
 
         const loadBlogType = () => {
             typeAll().then( res => {
-                if (res.data.code === 0) {
+                if (res.status == 200) {
                     state.classList = res.data.data 
                 } else {
                     ElNotification({
@@ -107,10 +106,10 @@ export default {
             blogOne({
                 id: state.BlogForm.id
             }).then ( res => {
-                if (res.data.code === 0) {
+                if (res.status == 200) {
                     state.BlogForm.title = res.data.data.title
                     state.BlogForm.content = res.data.data.content
-                    state.BlogForm.typeId = res.data.data.typeId
+                    state.BlogForm.type_id = res.data.data.type_id
                 } else {
                     ElNotification({
                         title: 'Error',
@@ -135,13 +134,14 @@ export default {
 
         // methods
         const submit = () => {
+            console.log(state.BlogForm)
             addBlogRef.value.validate( valid => {
                 if (!valid) {
                     return
                 }
-                console.log(state.BlogForm.typeId)
+                console.log(state.BlogForm.type_id)
                 saveBlog( state.BlogForm ).then( res => {
-                    if (res.data.code === 0) {
+                    if (res.status == 200) {
                         ElNotification({
                             title: 'Success',
                             type: 'success',

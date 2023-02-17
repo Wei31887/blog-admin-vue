@@ -73,8 +73,7 @@ export default {
                 if (!valid) {
                     return
                 }
-                store.dispatch('user/login', state.form).then((res) => {
-                    console.log(res)
+                store.dispatch('user/login', state.form).then(() => {
                     router.push({name: 'Welcome'})
                 }).catch( err => {
                     console.log(err)

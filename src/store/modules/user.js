@@ -10,7 +10,7 @@ export default {
         login({commit}, userInfo) {
             return new Promise((resolve, reject) => {
                 loginByUser(userInfo).then( res => {
-                    if (res.data.code == 0) {
+                    if (res.status == 200) {
                         commit('SET_TOKEN', res.data.data)
                         resolve(res)
                     } else {
@@ -26,7 +26,6 @@ export default {
         SET_TOKEN(state, token) {  
             state.token = token
             setToken(token)
-            console.log('token: ' + token)
         }
     },
     getters: {

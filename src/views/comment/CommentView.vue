@@ -70,7 +70,7 @@ export default {
                 page: state.currentPage,
                 size: state.pageSize
             }).then( res => {
-                if (res.data.code === 0) {
+                if (res.status == 200) {
                     state.tableData = res.data.data
                     total.value = parseInt(res.data.count) 
                 } else {
@@ -97,7 +97,7 @@ export default {
             }
 
             CommentStatus(update).then( res => {
-                if (res.data.code === 0) {
+                if (res.status == 200) {
                     let msg = update.status == 1 ? 'Block successfully!' : 'Unblock successfully!'
                     ElNotification({
                         title: 'Success',
@@ -126,7 +126,7 @@ export default {
                 commentDelete({
                     id: row.id
                 }).then( res => {
-                    if (res.data.code === 0) {
+                    if (res.status == 200) {
                         ElNotification({
                             title: 'Success',
                             type: 'success',

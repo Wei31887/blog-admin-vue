@@ -84,7 +84,7 @@ export default {
 
         const findInfo = () => {
             findBlogger().then( res => {
-                if (res.data.code === 0) {
+                if (res.status == 200) {
                     state.myInfo.userName = res.data.data.username
                     state.myInfo.nickName = res.data.data.nickname
                     state.myInfo.sign = res.data.data.sign

@@ -74,7 +74,7 @@ export default {
 
         const loadForm = () => {
             findBlogger().then( res => {
-                if (res.data.code == 0) {
+                if (res.status == 200) {
                     state.userInfo.id = res.data.data.id
                     state.userInfo.userName = res.data.data.username
                 }
@@ -98,7 +98,7 @@ export default {
                     username: state.userInfo.userName,
                     password: state.userInfo.newPassword
                 }).then( res => {
-                    if (res.data.code === 0) {
+                    if (res.status == 200) {
                         ElNotification({
                             title: 'Success',
                             type: 'success',

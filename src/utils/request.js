@@ -26,13 +26,12 @@ service.interceptors.request.use(
 // axios 攔截器： response前狀態
 service.interceptors.response.use(
     response => {
-        let res = response.data
-        if (res.code == 0) {
+        if (response.status == 200) {
             return response
         } else {
             ElNotification({
                 title: 'Error',
-                message: res.msg,
+                message: response.data.msg,
                 type: 'error',
                 duration: 2000
             });

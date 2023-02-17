@@ -156,7 +156,6 @@ div.nav-header {
   margin: 0.5rem 2rem 0.5rem 2rem;
   background-color: rgba(227, 238, 217, 0.5);
   border-radius: 6px;
-  
 }
 
 div.nav-header:hover {

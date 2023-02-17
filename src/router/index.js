@@ -13,7 +13,7 @@ const routes = [
         // Welcome 將渲染至 home 中 </router-view>
         path: 'welcome',
         name: 'Welcome',
-        component: () => import('@/views/WelcomeView.vue'),
+        component: () => import('@/views/welcome/WelcomeView.vue'),
       },
       {
         path: 'changePassword',

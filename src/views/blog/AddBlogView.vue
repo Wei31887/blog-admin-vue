@@ -1,7 +1,7 @@
 <template>
     <div class="header">
         <h2>
-            Add Blog
+            Blog 文章管理
         </h2> 
     </div>
     <div class="add-blog-view">
@@ -10,10 +10,10 @@
             ref="addBlogRef"
             :model="BlogForm"
             :rules="rules">
-                <el-form-item prop="title" label="Article title">
+                <el-form-item prop="title" label="文章標題">
                     <el-input type="text" v-model="BlogForm.title"/>
                 </el-form-item>
-                <el-form-item prop="type_id" label="Classification">
+                <el-form-item prop="type_id" label="文章分類">
                     <el-select
                     v-model="BlogForm.type_id"
                     clearable
@@ -21,14 +21,15 @@
                     style="width: 240px"
                     >
                     <el-option
-                        v-for="item in classList"
+                        v-for="item in typeList"
                         :key="item.id.toString()"
                         :label="item.name"
                         :value="item.id"
                     />
                     </el-select>
                 </el-form-item>
-                <el-form-item prop="content" label="Content">
+            
+                <el-form-item prop="content" label="文章內容">
                     <el-input
                         v-model="BlogForm.content"
                         :autosize="{ minRows: 4, maxRows: 4 }"
@@ -36,14 +37,31 @@
                         placeholder="Please input"
                     />
                 </el-form-item>
-                <el-form-item label="Operation">
+
+                <el-form-item prop="tag" label="文章標籤">
+                    <el-select
+                    v-model="tagSelect"
+                    multiple
+                    placeholder="Tags"
+                    style="width: 240px"
+                    >
+                    <el-option
+                        v-for="item in tagList"
+                        :key="item.id"
+                        :label="item.tag_name"
+                        :value="item.id"
+                    />
+                    </el-select>
+                </el-form-item>
+                {{BlogTagId}}    
+                <el-form-item label="操作">
                     <el-button type="primary" @click="submit">{{ func }}</el-button>
-                    <el-button type="default" @click="goBack">Go back</el-button>
+                    <el-button type="default" @click="goBack">返回</el-button>
                 </el-form-item>
             </el-form>
         </div>
         <div class="display-blog" v-html="markHTML">
-            
+        
         </div>
     </div>
 </template>
@@ -54,6 +72,7 @@ import { useRoute, useRouter } from 'vue-router';
 import { ElNotification } from 'element-plus'
 import { saveBlog, blogOne } from '@/api/blog';
 import { typeAll } from '@/api/blogType'
+import { tagAll } from '@/api/blogTag'
 import { marked } from 'marked'
 
 export default {
@@ -80,74 +99,39 @@ export default {
                 type_id: '',
                 content: '',
                 summary: '',
-                id: 0
+                id: 0,
+                tags: []
             },
-            classList: [], 
+            typeList: [], 
+            tagList: [],
+            tagSelect: [],
+            BlogTagId: 0
         })
 
         const markHTML = computed(() => {
             return marked(state.BlogForm.content)
         })
 
-        const loadBlogType = () => {
-            typeAll().then( res => {
-                if (res.status == 200) {
-                    state.classList = res.data.data 
-                } else {
-                    ElNotification({
-                        title: 'Error',
-                        type: 'error',
-                        message: res.data.msg
-                    }) 
-                }
-            })
-        }
-        const loadOneBlog = () => {
-            blogOne({
-                id: state.BlogForm.id
-            }).then ( res => {
-                if (res.status == 200) {
-                    state.BlogForm.title = res.data.data.title
-                    state.BlogForm.content = res.data.data.content
-                    state.BlogForm.type_id = res.data.data.type_id
-                } else {
-                    ElNotification({
-                        title: 'Error',
-                        type: 'error',
-                        message: res.data.msg
-                    }) 
-                }
-            })
-        }
-
-        // mounted
-        onMounted(() => {
-            state.BlogForm.id = route.params.id == undefined ? 0 : parseInt(route.params.id)
-            if (state.BlogForm.id == 0) {
-                func.value = 'Add Blog'
-            } else if (state.BlogForm.id > 0) {
-                func.value = 'Edit Blog'
-                loadOneBlog()
-            }
-            loadBlogType()
-        })
-
         // methods
-        const submit = () => {
-            console.log(state.BlogForm)
+        function submit() {
             addBlogRef.value.validate( valid => {
                 if (!valid) {
                     return
                 }
-                console.log(state.BlogForm.type_id)
+                state.tagSelect.forEach(item => {
+                    state.BlogForm.tags.push({
+                        "id": state.BlogTagId,
+                        "blog_id": state.BlogForm.id, 
+                        "tag_id": item})
+                })
                 saveBlog( state.BlogForm ).then( res => {
                     if (res.status == 200) {
+                        router.push({name: 'BlogList'})
                         ElNotification({
                             title: 'Success',
                             type: 'success',
                             message: 'Successfully save!' 
-                        })
-                        return
+                        })    
                     } else {
                         ElNotification({
                             title: 'Error',
@@ -161,9 +145,62 @@ export default {
 
             })
         }
-        const goBack = () => {
+
+        function goBack () {
             router.push({name: 'BlogList'})
         }
+
+        function loadBlogType() {
+            typeAll().then( res => {
+                if (res.status == 200) {
+                    state.typeList = res.data.data 
+                }
+            })
+        }
+
+        function loadBlogTag() {
+            tagAll().then( res => {
+                if (res.status == 200) {
+                    state.tagList = res.data.data 
+                }
+            })
+        }
+
+        function loadOneBlog() {
+            blogOne({
+                id: state.BlogForm.id
+            }).then ( res => {
+                if (res.status == 200) {
+                    console.log(res.data.data)
+                    state.BlogForm.title = res.data.data.title
+                    state.BlogForm.content = res.data.data.content
+                    state.BlogForm.type_id = res.data.data.type_id
+                    res.data.data.tags.forEach(item => {
+                        state.tagSelect.push(item.tag_id)
+                    })
+                    state.BlogTagId = res.data.data.tags.id
+                } else {
+                    ElNotification({
+                        title: 'Error',
+                        type: 'error',
+                        message: res.data.msg
+                    })
+                }
+            })
+        }
+
+        // mounted
+        onMounted(() => {
+            state.BlogForm.id = route.params.id == undefined ? 0 : parseInt(route.params.id)
+            loadBlogType()
+            loadBlogTag()
+            if (state.BlogForm.id == 0) {
+                func.value = '新增文章'
+            } else if (state.BlogForm.id > 0) {
+                func.value = '修改文章'
+                loadOneBlog()
+            }
+        })
 
         return {
             addBlogRef,

@@ -2,59 +2,59 @@
     <div class="blog-type-view">
         <div class="header">
             <h2>
-                Blog Type
+                標籤管理
             </h2> 
         </div>
-        <div class="add-type">
+        <div class="add-tag">
             <el-form
-            ref="addTypeRef"
-            :model="typeForm"
+            ref="addTagRef"
+            :model="tagForm"
             :rules="rules"
             :inline="true">
-                <el-form-item prop="type_name" label="分類">
-                    <el-input type="text" v-model="typeForm.type_name"/>
+                <el-form-item prop="tag_name" label="標籤">
+                    <el-input type="text" v-model="tagForm.tag_name"/>
                 </el-form-item>
             
                 <el-form-item prop="sort" label="排序">
-                    <el-input type="number" v-model="typeForm.sort"/>
+                    <el-input type="number" v-model="tagForm.sort"/>
                 </el-form-item>
                 <el-form-item >
                     <el-button class="blog-button" type="primary" size="small" @click="handleAdd()">
-                        新增分類
+                        新增標籤
                     </el-button>
                 </el-form-item>
             </el-form>
         </div>
-        <div class="blog-list-container">
-                <el-table :data="tableData" style="width: 100%">
-                  <el-table-column fixed prop="id" label="ID" width="100" />
-                  <el-table-column prop="name" label="文章分類" width="300" />
-                  <el-table-column prop="sort" label="排序" width="150" />
-                  <el-table-column fixed="right" label="操作" width="300">
-                    <template #default="scope">
-                        <el-button link type="danger" 
-                        @click="handleDelete(scope.$index, scope.row)">Delete
-                        </el-button>
-                    </template>
-                  </el-table-column>
-                </el-table>
-            </div>
-            <div class="pagination">
-                    <el-pagination
-                        v-model:current-page="currentPage"
-                        v-model:page-size="pageSize"
-                        background
-                        layout="prev, pager, next, jumper"
-                        :total="currentTotal"
-                        @current-change="handleCurrentChange"
-                        />
-            </div>
+        <div>
+            <el-table :data="tableData" style="width: 100%">
+                <el-table-column fixed prop="id" label="ID" width="100" />
+                <el-table-column prop="tag_name" label="標籤" width="300" />
+                <el-table-column prop="sort" label="排序" width="150" />
+                <el-table-column fixed="right" label="操作" width="300">
+                <template #default="scope">
+                    <el-button link type="danger" 
+                    @click="handleDelete(scope.$index, scope.row)">Delete
+                    </el-button>
+                </template>
+                </el-table-column>
+            </el-table>
+        </div>
+        <div class="pagination">
+                <el-pagination
+                    v-model:current-page="currentPage"
+                    v-model:page-size="pageSize"
+                    background
+                    layout="prev, pager, next, jumper"
+                    :total="currentTotal"
+                    @current-change="handleCurrentChange"
+                    />
+        </div>
     </div>
   </template>
 
 <script>
 import { ref, computed, reactive, toRefs, onMounted } from 'vue'
-import { typeDelete, typeList, saveType } from '@/api/blogType'
+import { tagDelete, tagList, saveTag } from '@/api/blogTag'
 import { ElNotification, ElMessageBox } from 'element-plus'
 
 export default {
@@ -66,15 +66,15 @@ export default {
             currentPage: 1,
             tableData: [],
         })
-        const typeState = reactive({
-            typeForm: {
-                type_name: '',
+        const tagState = reactive({
+            tagForm:{
+                tag_name: '',
                 sort: 0,
             }
         })
-        const addTypeRef = ref()
+        const addTagRef = ref()
         const rules = {
-            type_name: [ 
+            tag_name: [ 
                 {required: true, message: 'Can\'t be empty', trigger: 'blur'} 
             ],
             sort: [ 
@@ -87,35 +87,27 @@ export default {
         })
 
         function loading() {
-            typeList({
+            tagList({
                 page: listState.currentPage,
                 size: listState.pageSize
             }).then( res => {
-                console.log(res.data.data)
                 if (res.status == 200) {
                     listState.tableData = res.data.data
                     total.value = parseInt(res.data.count) 
-                } else {
-                    ElNotification({
-                        title: 'Error',
-                        type: 'error',
-                        message: res.data.msg
-                    })
                 }
             }).catch( e => {
                 console.log(e)
             })
         }
 
-        const handleAdd = () => {
-            addTypeRef.value.validate( valid => {
+        function handleAdd() {
+            addTagRef.value.validate( valid => {
                 if (!valid) {
                     return
                 }
-                console.log(typeState.typeForm)
-                saveType({
-                    name: typeState.typeForm.type_name,
-                    sort: parseInt(typeState.typeForm.sort)
+                saveTag({
+                    tag_name: tagState.tagForm.tag_name,
+                    sort: parseInt(tagState.tagForm.sort)
                 }).then( res => {
                     if (res.status == 200) {
                         ElNotification({
@@ -132,13 +124,13 @@ export default {
             })
         }
 
-        const handleDelete = (index, row) => {
+        function handleDelete(index, row) {
             ElMessageBox.confirm('Are you sure to delete it?', 'Warning', {
                 confirmButtonText: 'Yes',
                 cancelButtonText: 'No',
                 type: 'warning'
             }).then(() => {
-                typeDelete({
+                tagDelete({
                     id: row.id
                 }).then( res => {
                     if (res.status == 200) {
@@ -148,20 +140,14 @@ export default {
                             message: 'Delete successfully'
                         })
                         loading()
-                    } else {
-                        ElNotification({
-                            title: 'Error',
-                            type: 'error',
-                            message: res.data.msg
-                        })
-                    }
+                    } 
                 })
             }).catch((e) => { 
                 console.log(e)
             })
         }
 
-        const handleCurrentChange = (newPage) => {
+        function handleCurrentChange(newPage) {
             listState.currentPage = newPage
             loading()
         }
@@ -171,11 +157,11 @@ export default {
         })
 
         return {
+            addTagRef,
+            rules,
             currentTotal,
             ...toRefs(listState),
-            ...toRefs(typeState),
-            addTypeRef,
-            rules,
+            ...toRefs(tagState),
             handleAdd,
             handleDelete,
             handleCurrentChange,

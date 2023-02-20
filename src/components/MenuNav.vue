@@ -39,40 +39,46 @@ export default {
       const menus = [
         {
           id: 1,
-          title: 'Home Page',
+          title: '首頁',
           path: '/admin/home/welcome',
           icon: 'home-filled',
           child: []
         },
         {
           id: 2,
-          title: 'Blog Management',
+          title: '文章管理',
           path: '',
           icon: 'setting',
           child: [
             {
               id: 201,
-              title: 'List of blog',
+              title: '文章列表',
               path: '/admin/home/blogList',
               icon: 'messageBox',
             },
             {
               id: 202,
-              title: 'Type of blog',
+              title: '文章分類',
               path: '/admin/home/blogType',
+              icon: 'setting',
+            },
+            {
+              id: 203,
+              title: '文章標籤',
+              path: '/admin/home/blogTag',
               icon: 'setting',
             },
           ]
         },
         {
           id: 3,
-          title: 'Comment Management',
+          title: '留言管理',
           path: '',
           icon: 'view',
           child: [
             {
               id: 301,
-              title: 'List of comment',
+              title: '留言列表',
               path: '/admin/home/commentList',
               icon: 'messageBox',
             }
@@ -86,7 +92,7 @@ export default {
           child: [
             {
               id: 401,
-              title: 'Introduction',
+              title: '個人訊息',
               path: '/admin/home/myInfo',
               icon: 'avatar',
             }
@@ -94,13 +100,13 @@ export default {
         },
         {
           id: 5,
-          title: 'System Management',
+          title: '系統',
           path: '',
           icon: 'setting',
           child: [
             {
               id: 501,
-              title: 'Password change',
+              title: '修改密碼',
               path: '/admin/home/changePassword',
               icon: 'setting',
             }

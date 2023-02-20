@@ -41,6 +41,11 @@ const routes = [
         component: () => import('@/views/blog/BlogTypeView')
       },
       {
+        path: 'blogTag',
+        name: 'BlogTag',
+        component: () => import('@/views/blog/BlogTagView')
+      },
+      {
         path: 'commentList',
         name: 'Comment',
         component: () => import('@/views/comment/CommentView')

@@ -34,7 +34,7 @@ export function typeDelete(data) {
 
 export function typeAll() {
   return request({
-    url: '/admin/blog/type/All',
+    url: '/admin/blog/type/all',
     method: 'post'
   })
 }

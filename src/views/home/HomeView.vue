@@ -46,13 +46,13 @@ export default {
         // FooterView
     },
     setup() {
-        const asideRatio = ref(6)
+        const asideRatio = ref(5)
 
         const changeRatio = (status) => {
           if (status.value) {
             asideRatio.value = 2
           } else {
-            asideRatio.value = 6
+            asideRatio.value = 5
           }
         }
         return {
@@ -65,6 +65,7 @@ export default {
 
 <style>
 div.container {
+  background-color: var(--background-color);
   position: relative;
   min-height: 100vh;
   height: 100%;

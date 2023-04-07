@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import { getToken } from '@/utils/token'
+import { getAccessToken } from '@/utils/token'
 import Home from '@/views/home/HomeView.vue'
 // import Test from '@/views/TestView'
 
@@ -69,7 +69,7 @@ const router = createRouter({
 })
 
 router.beforeEach( (to, from, next) => {
-  const token = getToken();
+  const token = getAccessToken();
   if(token){
     if(to.name == "Login") {
       next({name: "Welcome"})

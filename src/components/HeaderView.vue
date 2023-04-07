@@ -25,7 +25,7 @@
 
 <script>
 import { findBlogger, logout } from '@/api/blogger'
-import { removeToken } from '@/utils/token'
+import { removeAccessToken } from '@/utils/token'
 import { useRouter } from 'vue-router'
 import { onMounted, computed, ref } from 'vue'
 import { ElMessageBox } from 'element-plus'
@@ -58,7 +58,7 @@ export default {
             }).then(() => {
                 logout().then( res => {
                   if (res.status == 200) {
-                    removeToken()
+                    removeAccessToken()
                     router.push({name: 'Login'})
                   }
                 })

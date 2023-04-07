@@ -1,6 +1,6 @@
 import axios from "axios"
 import store from "@/store";
-import { getToken } from '@/utils/token'
+import { getAccessToken, removeAccessToken } from '@/utils/token'
 import { ElNotification } from 'element-plus'
 import { BASE_API } from "@/config/config";
 
@@ -12,8 +12,8 @@ const service = axios.create({
 // axios 攔截器： 攔截request前狀態（token設置）
 service.interceptors.request.use(
     config => {
-        if (store.getters['user/getToken']) {
-            config.headers['token'] = getToken()
+        if (store.getters['user/getAccessToken']) {
+            config.headers['access_token'] = getAccessToken()
         }
         return config
     },
@@ -39,14 +39,18 @@ service.interceptors.response.use(
         }
     },
     error => {
-        console.log('err: ' + error);
-        ElNotification({
-            title: 'Error',
-            type: 'error',
-            message: error.response.status + ', ' + error.response.data.msg,
-            duration: 3000
-        })
-        return Promise.reject(error)
+        if (error.response.status == 514 ) {
+            removeAccessToken()
+            return Promise.reject(error)
+        } else {
+            ElNotification({
+                title: 'Error',
+                type: 'error',
+                message: error.response.status + ', ' + error.response.data.msg,
+                duration: 3000
+            })
+            return Promise.reject(error)
+        }
     }
 )
 

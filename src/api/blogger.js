@@ -33,7 +33,7 @@ export function updateInfo(data) {
 
 export function logout() {
   return request({
-    url: '/logout',
+    url: 'admin/logout',
     method: 'post'
   })
 }

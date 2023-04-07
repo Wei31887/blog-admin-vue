@@ -15,15 +15,15 @@ const service = axios.create({
 
 // axios 攔截器： 攔截request前狀態（access_token 狀態）
 service.interceptors.request.use(
-  (config) => {
+  async (config) => {
     if (store.getters["user/getAccessToken"]) {
       config.headers["access_token"] = getAccessToken();
     }
     var expireTime = new Date(store.getters["user/getAccessTokenExpires"]);
     var diffMs = Math.round((expireTime.getTime() - Date.now()) / 60000);
-    console.log(expireTime, diffMs);
+    // console.log(expireTime, diffMs);
     if (diffMs <= 10) {
-      store
+      await store
         .dispatch("user/refresh", { "refresh_token": getRefreshToken()})
         .catch((err) => {
           console.log(err);
@@ -64,13 +64,14 @@ service.interceptors.response.use(
           duration: 3000,
         });
       }
+    } else {
+        ElNotification({
+          title: "Error",
+          type: "error",
+          message: error,
+          duration: 3000,
+        });
     }
-    ElNotification({
-      title: "Error",
-      type: "error",
-      message: error,
-      duration: 3000,
-    });
     return Promise.reject(error);
   }
 );

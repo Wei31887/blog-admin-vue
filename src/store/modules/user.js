@@ -44,7 +44,6 @@ export default {
       return new Promise((resolve, reject) => {
         fetch(BASE_API + "token/refresh", {
           method: "POST",
-          //別忘了把主體参數轉成字串，否則資料會變成[object Object]，它無法被成功儲存在後台
           body: JSON.stringify(body),
         })
           .then((response) => response.json())

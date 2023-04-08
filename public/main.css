@@ -9,8 +9,16 @@ body,
     text-align: center;
     font-family: 'Microsoft YaHei', 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB',
     '微软雅黑', Arial, sans-serif;
-    --background-color: rgb(255, 255, 255);
+    --background-color: rgb(246, 245, 241);
     --div-color: rgb(241, 241, 241) ;
     --border-color: rgb(162, 162, 162);
-    --header-color: rgb(231, 231, 227);
+    --nav-color: rgb(219, 217, 211);
+    --sidebar-color: rgb(255, 255, 255);
+
+    --nav-box-shadow: 0 .1rem .2rem 0 var(--nav-shadow);
+    --nav-shadow: rgba(0, 0, 0, 0.2);
+    --sidebar-box-shadow: .2rem 0rem .2rem 0 var(--sidebar-shadow);
+    --sidebar-shadow: rgba(0, 0, 0, 0.2);
+
+    --navbar-height: 4.5rem;
 }

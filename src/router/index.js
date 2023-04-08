@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { getAccessToken } from '@/utils/token'
-import Home from '@/views/home/HomeView.vue'
+import Home from '@/views/AppLayout.vue'
 // import Test from '@/views/TestView'
 
 const routes = [
@@ -55,7 +55,7 @@ const routes = [
   {
     path: '/login',
     name: 'Login',
-    component: () => import('@/views/login/LoginView.vue')
+    component: () => import('@/views/LoginLayout.vue')
   },
   {
     path: '/:pathMatch(.*)*',

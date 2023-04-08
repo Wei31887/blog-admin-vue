@@ -9,11 +9,11 @@
             <el-button class="blog-button" type="primary" size="large" @click="handleAdd()">Write a blog</el-button>
             <el-table :data="tableData" style="width: 100%">
                 <el-table-column fixed prop="id" label="ID" width="70" />
-                <el-table-column prop="title" label="文章標題" width="150" />
+                <el-table-column prop="title" label="文章標題" width="200" />
                 <el-table-column prop="type_name" label="文章分類" width="180" />
                 <el-table-column prop="add_time" label="創建時間" width="180" />
                 <el-table-column prop="update_time" label="更新時間" width="180" />
-                <el-table-column fixed="right" label="操作" width="150">
+                <el-table-column fixed="right" label="操作" width="180">
                 <template #default="scope">
                     <el-button link type="danger" 
                     @click="handleDelete(scope.$index, scope.row)">Delete

@@ -1,5 +1,5 @@
 <template>
-    <div class="blog-type-view">
+    <div class="page-blog-blogcategory">
         <div class="header">
             <h2>
                 Blog Type
@@ -188,7 +188,8 @@ export default {
 
 <style scoped>
 
-div.blog-type-view {
+div.page-blog-blogcategory {
+    padding: 1rem;
     width: 100%;
 }
 div.blog-list-container {

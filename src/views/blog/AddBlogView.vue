@@ -1,60 +1,63 @@
 <template>
-  <div class="header">
-    <h2>Blog 文章管理</h2>
-  </div>
-  <div class="add-blog-view">
-    <div class="add-blog-form">
-      <el-form ref="addBlogRef" :model="BlogForm" :rules="rules">
-        <el-form-item prop="title" label="文章標題">
-          <el-input type="text" v-model="BlogForm.title" />
-        </el-form-item>
-        <el-form-item prop="type_id" label="文章分類">
-          <el-select
-            v-model="BlogForm.type_id"
-            clearable
-            placeholder="Select"
-            style="width: 240px"
-          >
-            <el-option
-              v-for="item in typeList"
-              :key="item.id.toString()"
-              :label="item.name"
-              :value="item.id"
-            />
-          </el-select>
-        </el-form-item>
+  <div class="page-blog-addblog">
 
-        <el-form-item prop="content" label="文章內容">
-          <el-input
-            v-model="BlogForm.content"
-            :autosize="{ minRows: 4, maxRows: 4 }"
-            type="textarea"
-            placeholder="Please input"
-          />
-        </el-form-item>
-
-        <el-form-item prop="tag" label="文章標籤">
-          <el-select
-            v-model="tagSelect"
-            multiple
-            placeholder="Tags"
-            style="width: 240px"
-          >
-            <el-option
-              v-for="item in tagList"
-              :key="item.id"
-              :label="item.tag_name"
-              :value="item.id"
-            />
-          </el-select>
-        </el-form-item>
-        <el-form-item label="操作">
-          <el-button type="primary" @click="submit">{{ func }}</el-button>
-          <el-button type="default" @click="goBack">返回</el-button>
-        </el-form-item>
-      </el-form>
+    <div class="header">
+      <h2>Blog 文章管理</h2>
     </div>
-    <div class="display-blog" v-html="markHTML"></div>
+    <div class="add-blog-view">
+      <div class="add-blog-form">
+        <el-form ref="addBlogRef" :model="BlogForm" :rules="rules">
+          <el-form-item prop="title" label="文章標題">
+            <el-input type="text" v-model="BlogForm.title" />
+          </el-form-item>
+          <el-form-item prop="type_id" label="文章分類">
+            <el-select
+              v-model="BlogForm.type_id"
+              clearable
+              placeholder="Select"
+              style="width: 240px"
+            >
+              <el-option
+                v-for="item in typeList"
+                :key="item.id.toString()"
+                :label="item.name"
+                :value="item.id"
+              />
+            </el-select>
+          </el-form-item>
+  
+          <el-form-item prop="content" label="文章內容">
+            <el-input
+              v-model="BlogForm.content"
+              :autosize="{ minRows: 4, maxRows: 4 }"
+              type="textarea"
+              placeholder="Please input"
+            />
+          </el-form-item>
+  
+          <el-form-item prop="tag" label="文章標籤">
+            <el-select
+              v-model="tagSelect"
+              multiple
+              placeholder="Tags"
+              style="width: 240px"
+            >
+              <el-option
+                v-for="item in tagList"
+                :key="item.id"
+                :label="item.tag_name"
+                :value="item.id"
+              />
+            </el-select>
+          </el-form-item>
+          <el-form-item label="操作">
+            <el-button type="primary" @click="submit">{{ func }}</el-button>
+            <el-button type="default" @click="goBack">返回</el-button>
+          </el-form-item>
+        </el-form>
+      </div>
+      <div class="display-blog" v-html="markHTML"></div>
+    </div>
   </div>
 </template>
 
@@ -206,6 +209,10 @@ export default {
 </script>
 
 <style>
+.page-blog-addblog {
+  padding: 1rem;
+}
+
 div.add-blog-view {
   /* height: 100%; */
   width: 100%;

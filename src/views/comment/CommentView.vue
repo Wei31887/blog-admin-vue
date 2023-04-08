@@ -1,45 +1,48 @@
 <template>
-    <div class="header">
-        <h2>
-            Comment List
-        </h2> 
-    </div>
-        <div class="pagination">
-                <el-pagination
-                    v-model:current-page="currentPage"
-                    v-model:page-size="pageSize"
-                    background
-                    layout="prev, pager, next, jumper"
-                    :total="currentTotal"
-                    @current-change="handleCurrentChange"
-                    />
+    <div class="page-blog-commentlist">
+
+        <div class="header">
+            <h2>
+                Comment List
+            </h2> 
         </div>
-        <el-table :data="tableData" style="width: 100%">
-          <el-table-column fixed prop="id" label="ID" width="70" />
-          <el-table-column prop="ip" label="IP" width="120" />
-          <el-table-column prop="blog_id" label="Blog ID" width="80" />
-          <el-table-column prop="blog_title" label="Blog Title" width="120" />
-          <el-table-column prop="content" label="Content" width="180" />
-          <el-table-column prop="status" label="Status" width="80" />
-          <el-table-column prop="add_time" label="Add time" width="180" />
-          <el-table-column fixed="right" label="Operations" width="150">
-            <template #default="scope">
-                <el-button link type="danger" 
-                @click="handleDelete(scope.$index, scope.row)">Delete
-                </el-button>
-                <div class="function">
-                    <el-button link type="info"  
-                    @click="handleBlock(scope.$index, scope.row)"
-                    v-if="scope.row.status==0">
-                    Block</el-button>
-                    <el-button link type="info"  
-                    @click="handleBlock(scope.$index, scope.row)"
-                    v-else>
-                    Unblock</el-button>
-                </div>
-            </template>
-          </el-table-column>
-        </el-table>
+            <div class="pagination">
+                    <el-pagination
+                        v-model:current-page="currentPage"
+                        v-model:page-size="pageSize"
+                        background
+                        layout="prev, pager, next, jumper"
+                        :total="currentTotal"
+                        @current-change="handleCurrentChange"
+                        />
+            </div>
+            <el-table :data="tableData" style="width: 100%">
+                <el-table-column fixed prop="id" label="ID" width="70" />
+                <el-table-column prop="blog_title" label="Blog Title" width="150" />
+                <el-table-column prop="nick_name" label="nickname" width="120" />
+                <el-table-column prop="ip" label="IP" width="120" />
+              <el-table-column prop="content" label="Content" width="180" />
+              <el-table-column prop="status" label="Status" width="80" />
+              <el-table-column prop="add_time" label="Add time" width="180" />
+              <el-table-column fixed="right" label="Operations" width="150">
+                <template #default="scope">
+                    <el-button link type="danger" 
+                    @click="handleDelete(scope.$index, scope.row)">Delete
+                    </el-button>
+                    <div class="function">
+                        <el-button link type="info"  
+                        @click="handleBlock(scope.$index, scope.row)"
+                        v-if="scope.row.status==0">
+                        Block</el-button>
+                        <el-button link type="info"  
+                        @click="handleBlock(scope.$index, scope.row)"
+                        v-else>
+                        Unblock</el-button>
+                    </div>
+                </template>
+              </el-table-column>
+            </el-table>
+    </div>
         
   </template>
 
@@ -72,6 +75,7 @@ export default {
             }).then( res => {
                 if (res.status == 200) {
                     state.tableData = res.data.data
+                    console.log(state.tableData)
                     total.value = parseInt(res.data.count) 
                 } else {
                     ElNotification({
@@ -170,6 +174,10 @@ export default {
 </script>
 
 <style scoped>
+.page-blog-commentlist{
+    padding: 1rem;
+}
+
 div.pagination {
     display: flex;
     justify-content: center;

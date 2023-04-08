@@ -74,6 +74,7 @@ div.app-layout-sidebar {
   left: 0;
   top: var(--header-height);
   box-shadow: var(--nav-box-shadow);
+  /* padding-top: 1rem; */
 }
 
 .el-menu {
@@ -88,10 +89,11 @@ div.app-layout-sidebar {
 
 div.app-layout-sidebar__header {
   padding: 1rem;
+
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 0.5rem 2rem 0.5rem 2rem;
+  margin: 1rem 2rem 0.5rem 2rem;
   background-color: rgba(227, 238, 217, 0.5);
   border-radius: 6px;
 }
